@@ -25,4 +25,7 @@ export const routes: Routes = [
 {
     path:'vendorcrud', component:Busvendor
 },
+{
+    path:'reactive-adv', component:Busvendor
+},
 ];
