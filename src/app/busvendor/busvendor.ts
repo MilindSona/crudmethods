@@ -1,14 +1,17 @@
 import { Component, signal, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { CommonModule, JsonPipe } from '@angular/common';
+import { CustomermasterService } from '../customermaster.service';
+import { UtilityService } from '../utility.service';
 
 @Component({
   selector: 'app-busvendor',
-  imports: [FormsModule],
+  imports: [FormsModule,CommonModule],
   templateUrl: './busvendor.html'
 })
 export class Busvendor implements OnInit {
-
+ resultSum:any;
   customersList = signal<any[]>([]);
   newCustomerObj: any = {
     userId: 0,
@@ -22,17 +25,21 @@ export class Busvendor implements OnInit {
     refreshToken: "",
     refreshTokenExpiryTime: new Date()
   }
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private custmerService:CustomermasterService,
+    private sumservice:UtilityService
+  ) { }
 
   ngOnInit(): void {
     this.getUsersData();
+    this.resultSum=this.sumservice.getSum(1,2,3,4);
+    console.log(this.resultSum)
   }
   getUsersData() {
-    this.http.get('https://api.freeprojectapi.com/api/BusBooking/GetAllUsers').subscribe(
-      {
-        next: (result: any) => this.customersList.set(result.data)
+    this.custmerService.getAllCustomerList().subscribe({
+      next:(res:any)=>{
+      this.customersList.set(res.data)
       }
-    )
+    })
   }
   addNewCustomer() {
     if (!this.newCustomerObj.userName?.trim() || !this.newCustomerObj.emailId?.trim() || !this.newCustomerObj.password?.trim()) {
@@ -124,5 +131,7 @@ export class Busvendor implements OnInit {
       }
     });
   }
+
+
 }
 

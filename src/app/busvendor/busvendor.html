@@ -5,26 +5,53 @@
     <div class="card mb-3">
       <div class="card-header bg-warning">{{newCustomerObj.userId==0 ? "New customer form" : "Edit customer form"}}</div>
       <div class="card-body">
+        <form #formRef="ngForm">
         <div class="row">
             <div class="col-md-6 col-12">
                 <label for="userName">Customer Name</label>
-                <input type="text" id="userName" class="form-control" [(ngModel)]="newCustomerObj.userName" name="userName">
+                <input type="text" id="userName" #uName="ngModel" class="form-control" [(ngModel)]="newCustomerObj.userName" name="userName"
+                required minlength="4" maxlength="20">
+                @if(uName.touched){
+                <span class="text-danger" *ngIf="uName.errors?.['required']">Customer Name is required</span>
+                <span class="text-danger" *ngIf="uName.errors?.['minlength']"> Must be at least 4 characters long</span>
+                <span class="text-danger" *ngIf="uName.errors?.['maxlength']"> Cannot be more than 20 characters long</span>
+                }
+                
+     
             </div>
             <div class="col-md-6 col-12">
                 <label for="Email">Email</label>
-                <input type="text" id="Email" class="form-control" [(ngModel)]="newCustomerObj.emailId" name="emailId">
+                <input type="text" id="Email" class="form-control" #email="ngModel" [(ngModel)]="newCustomerObj.emailId" required minlength="10" maxlength="30" 
+                pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" name="emailId">
+                @if(email.touched){
+                <span class="text-danger" *ngIf="email.errors?.['required']">Email is required</span>
+                <span class="text-danger" *ngIf="email.errors?.['minlength']"> Must be at least 10 characters long</span>
+                <span class="text-danger" *ngIf="email.errors?.['pattern']"> Invalid email format</span>
+                }
+            
             </div>
             <div class="col-md-6 col-12 mt-2">
                 <label for="fullName">Full Name</label>
-                <input type="text" id="fullName" class="form-control" [(ngModel)]="newCustomerObj.fullName" name="fullName">
+                <input #fName="ngModel" type="text" id="fullName" class="form-control" [(ngModel)]="newCustomerObj.fullName" name="fullName" required minlength="4" maxlength="20">
+                @if(fName.touched){
+                 <span class="text-danger" *ngIf="fName.errors?.['required']">Full Name is required</span>
+                 <span class="text-danger" *ngIf="fName.errors?.['minlength']"> must be at least 4 characters long</span>
+                }
+               
             </div>
             <div class="col-md-6 col-12 mt-2">
                 <label for="role">Role</label>
-                <input type="text" id="role" class="form-control" [(ngModel)]="newCustomerObj.role" name="role">
+                <input type="text" id="role" class="form-control" [(ngModel)]="newCustomerObj.role" name="role" >
             </div>
             <div class="col-md-6 col-12 mt-2">
                 <label for="password">Password</label>
-                <input type="text" id="password" class="form-control" [(ngModel)]="newCustomerObj.password" name="password">
+                <input type="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" #pass="ngModel" required minlength="8" maxlength="20" id="password" class="form-control" [(ngModel)]="newCustomerObj.password" name="password">
+               @if(pass.touched){
+                <span class="text-danger"  *ngIf="pass.errors?.['required']">Password is must</span>
+                <span class="text-danger" *ngIf="pass.errors?.['minlength']">Min 8 chars</span>
+                <span class="text-danger" *ngIf="pass.errors?.['pattern']"> Password must contain at least one uppercase letter,
+      one lowercase letter, one number, and one special character</span>
+                }
             </div>
             <div class="col-md-6 col-12 mt-2">
                 <label for="projectName">Project Name</label>
@@ -34,7 +61,7 @@
         <div class="row mt-3">
             <div class="col-6">
                 @if(newCustomerObj.userId==0){
-                    <button class="btn btn-sm btn-primary px-3" (click)="addNewCustomer()">Add Customer</button>
+                    <button [disabled]="formRef.invalid" class="btn btn-sm btn-primary px-3" (click)="addNewCustomer()">Add Customer</button>
                 } @else {
                     <button class="btn btn-sm btn-warning px-3" (click)="updateCustomer()">Update Customer</button>
                 }
@@ -43,6 +70,7 @@
                 <button class="btn btn-sm btn-secondary px-3" (click)="clearFormData()">Clear</button>
             </div>
         </div>
+        </form>
       </div>
     </div>
   </div>
