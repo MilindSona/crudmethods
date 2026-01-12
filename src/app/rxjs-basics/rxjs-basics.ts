@@ -1,6 +1,6 @@
 import { AsyncPipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { from, interval, Observable, of } from 'rxjs';
+import { from, interval, Observable, of, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-rxjs-basics',
@@ -33,6 +33,9 @@ export class RxjsBasics {
    //one by one data like for loop
 
 //2 multicast observables 
+//2.1 Subject is speacil type of Observable 
+
+$loggedUserName:Subject<string>=new Subject<string>;
 
 
   constructor() {
@@ -48,9 +51,20 @@ export class RxjsBasics {
       console.log(batch)
     });
 
-    this.$timer.subscribe(time=>console.log(time));
+    //this.$timer.subscribe(time=>console.log(time));
 
-    this.$cityList.pipe().subscribe(city=>console.log(city))
+    this.$cityList.pipe().subscribe(city=>console.log(city));
+
+    this.$loggedUserName.subscribe(res=>{console.log(res)})
+    this.$loggedUserName.next("Milind")
+    
   }
+
+  //Short answer (intuition)
+
+//Because Subject does NOT store values.
+//It only pushes values to current listeners.
+//subscribe() → you join the meeting
+//next() → someone speaks into the mic
 
 }
