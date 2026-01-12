@@ -1,4 +1,4 @@
-import { Component ,signal} from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 @Component({
   selector: 'app-basicsignal',
@@ -8,11 +8,11 @@ import { Component ,signal} from '@angular/core';
 })
 export class Basicsignal {
 
-  productName=signal<string>('Laptop');
-studentObj=signal<any>({id:101,name:'John',age:23});
-  constructor(){
-    setTimeout(()=>{
-this.productName.set('Smartphone');
-    },3000)
+  productName = signal<string>('Laptop');
+  studentObj = signal<any>({ id: 101, name: 'John', age: 23 });
+  constructor() {
+    setTimeout(() => {
+      this.productName.set('Smartphone');
+    }, 3000)
   }
 }

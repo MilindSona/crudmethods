@@ -5,6 +5,7 @@ import { Basicsignal } from './basicsignal/basicsignal';
 import { Ngstyle } from './ngstyle/ngstyle';
 import { GetAPIexample } from './get-apiexample/get-apiexample';
 import { Busvendor } from './busvendor/busvendor';
+import { SignalAdvance } from './signal-advance/signal-advance';
 
 export const routes: Routes = [
 {
@@ -27,5 +28,8 @@ export const routes: Routes = [
 },
 {
     path:'reactive-adv', component:Busvendor
+},
+{
+    path:'signaladv', component:SignalAdvance
 },
 ];
