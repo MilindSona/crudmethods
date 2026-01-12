@@ -6,6 +6,7 @@ import { Ngstyle } from './ngstyle/ngstyle';
 import { GetAPIexample } from './get-apiexample/get-apiexample';
 import { Busvendor } from './busvendor/busvendor';
 import { SignalAdvance } from './signal-advance/signal-advance';
+import { RxjsBasics } from './rxjs-basics/rxjs-basics';
 
 export const routes: Routes = [
 {
@@ -31,5 +32,8 @@ export const routes: Routes = [
 },
 {
     path:'signaladv', component:SignalAdvance
+},
+{
+    path:'RxjsBasics', component:RxjsBasics
 },
 ];
